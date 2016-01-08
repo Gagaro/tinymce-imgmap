@@ -13,8 +13,7 @@
             ed.windowManager.open({
                 file : url + '/popup.html',
                 width : 700,
-                height : 560,
-                inline : 1
+                height : 560
             }, {
                 plugin_url : url
             });
@@ -29,7 +28,8 @@
             onPostRender: function() {
                 var ctrl = this;
 
-                ed.on('NodeChange', function (ed, cm, node) {
+                ed.on('NodeChange', function (event) {
+                    var node = event.element;
 
                     if (node == null)
                         return;
@@ -40,12 +40,12 @@
                         //console.log(node.nodeName);
                         if (node.nodeName == "IMG" && ed.dom.getAttrib(node, 'class').indexOf('mceItem') == -1) {
                             if (ed.dom.getAttrib(node, 'usemap') != '') {
-                                cm.setDisabled('imgmap', false);
-                                cm.setActive('imgmap', true);
+                                ctrl.disabled(false);
+                                ctrl.active(true);
                             }
                             else {
-                                cm.setDisabled('imgmap', false);
-                                cm.setActive('imgmap', false);
+                                ctrl.disabled(false);
+                                ctrl.active(false);
                             }
                             return true;
                         }
@@ -53,8 +53,8 @@
                     while ((node = node.parentNode));
 
                     //button disabled by default
-                    cm.setDisabled('imgmap', true);
-                    cm.setActive('imgmap', false);
+                    ctrl.disabled(true);
+                    ctrl.active(false);
                     return true;
                 });
             },

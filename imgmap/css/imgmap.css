@@ -1,17 +1,17 @@
 
-FIELDSET {
+fieldset {
 	margin: 0;
 	padding: 5px 5px;
 }
 
-LEGEND {
+legend {
 	background-image: url(../images/bullet_green.gif);
 	background-repeat: no-repeat;
 	background-position: left center;
 	padding-left: 15px;
 	padding-right: 5px;
 }
-LEGEND A {
+legend a {
 	border: none!important;
 	text-decoration: none;
 	cursor: pointer;
@@ -21,10 +21,10 @@ LEGEND A {
 	border-bottom: none;
 	border-right: none;
 }
-.fieldset_off LEGEND {
+.fieldset_off legend {
 	background-image: url(../images/bullet_orange.gif);
 }
-.fieldset_off DIV {
+.fieldset_off div {
 	display: none;
 }
 
@@ -48,13 +48,13 @@ LEGEND A {
 	width: 250px;
 	height: 24px;
 }
-.source_url INPUT, .source_url SELECT {
+.source_url input, .source_url select {
 	font-size: 95%;
 	width: 240px;
 	padding: 0 0 0 1px;
 }
 
-A.source_accept {
+a.source_accept {
 	display: block;
 	float: left;
 	padding-left: 18px;
@@ -66,7 +66,7 @@ A.source_accept {
 	letter-spacing: -1px;
 	border: none!important;
 }
-A.source_accept:hover {
+a.source_accept:hover {
 	color: #333333!important;
 }
 
@@ -83,7 +83,7 @@ A.source_accept:hover {
 	border-top: solid 1px #bfc1c5;
 }
 
-#form_container INPUT, #form_container SELECT {
+#form_container input, #form_container select {
 	border: 1px solid black;
 	font-size: 10px;
 	margin: 0;
