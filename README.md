@@ -3,6 +3,8 @@ An image mapping plugins for TinyMCE 4
 
 This is based on https://github.com/maschek/imgmap
 
+# WIP: DOES NOT WORK YET
+
 How to install the plugin
 =========================
 
