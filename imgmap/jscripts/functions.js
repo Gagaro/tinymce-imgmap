@@ -5,12 +5,13 @@ var map_obj = null;
 //array of form elements
 var props = [];
 
-function init() {
+function tinymce_imgmap_init() {
 	
-	tinyMCEPopup.resizeToInnerSize();
+	//tinyMCEPopup.resizeToInnerSize();
 	//tinyMCE.setWindowArg('mce_windowresize', true);//i guess we dont need this
 
-	editor = tinyMCEPopup.editor;
+	//editor = tinyMCEPopup.editor;
+	editor = top.tinymce.activeEditor;
 	img_obj = editor.selection.getNode();
 
 	//late init
@@ -59,7 +60,7 @@ function init() {
 
 function updateAction() {
 	if (img_obj != null && img_obj.nodeName == "IMG") {
-		tinyMCEPopup.execCommand("mceBeginUndoLevel");
+		top.tinymce.activeEditor.execCommand("mceBeginUndoLevel");
 
 		if (typeof map_obj == 'undefined' || map_obj == null) {
 			map_obj = editor.contentWindow.document.createElement('MAP');
@@ -74,26 +75,26 @@ function updateAction() {
 		img_obj.setAttribute('usemap', "#" + myimgmap.getMapName(), 0);
 		//img_obj.setAttribute('border', '0');
 		
-		tinyMCEPopup.execCommand("mceEndUndoLevel");
+		top.tinymce.activeEditor.execCommand("mceEndUndoLevel");
 	}
-	tinyMCEPopup.close();
+	top.tinymce.activeEditor.windowManager.close();
 }
 
 function cancelAction() {
-	tinyMCEPopup.close();
+	top.tinymce.activeEditor.windowManager.close();
 }
 
 //remove the map object and unset the usemap attribute
 function removeAction() {
-	tinyMCEPopup.execCommand("mceBeginUndoLevel");
+	top.tinymce.activeEditor.execCommand("mceBeginUndoLevel");
 	if (img_obj != null && img_obj.nodeName == "IMG") {
 		img_obj.removeAttribute('usemap', 0);
 	}
 	if (typeof map_obj != 'undefined' && map_obj != null) {
 		map_obj.parentNode.removeChild(map_obj);
 	}
-	tinyMCEPopup.execCommand("mceEndUndoLevel");
-	tinyMCEPopup.close();
+	top.tinymce.activeEditor.execCommand("mceEndUndoLevel");
+	top.tinymce.activeEditor.windowManager.close();
 }
 
 /** FUNCTION SECTION (code taken from default_interface) *****************************/

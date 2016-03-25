@@ -3,8 +3,6 @@ An image mapping plugins for TinyMCE 4
 
 This is based on https://github.com/maschek/imgmap
 
-# WIP: DOES NOT WORK YET
-
 How to install the plugin
 =========================
 
@@ -21,3 +19,8 @@ How to install the plugin
 4. you might need to add::
 
   extended_valid_elements : "img[usemap|class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],map[id|name],area[shape|alt|coords|href|target]",
+
+Known Issues
+============
+
+* Translation doesn't work.

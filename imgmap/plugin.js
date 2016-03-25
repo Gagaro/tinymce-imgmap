@@ -1,5 +1,12 @@
 (function() {
-	tinymce.PluginManager.requireLangPack('imgmap', 'en');
+	tinymce.PluginManager.requireLangPack('imgmap', 'en,fr');
+
+    tinyMCE.addI18n('en.imgmap', {
+        title : 'Image Map Editor',
+        desc : 'Image Map Editor',
+        remove : 'Remove map'
+    });
+
 	
 	tinymce.PluginManager.add('imgmap', function(ed, url) {
         // Register commands

@@ -75,16 +75,18 @@
 
 		<div class="mceActionPanel">
 			<div style="float: left">
-				<input type="button" id="insert" name="update" value="{#update}" onclick="updateAction();" />
+				<input type="button" id="insert" name="update" value="Update" onclick="updateAction();" />
 			</div>
 
 			<div style="float: right">
-				<input type="button" id="remove" class="button" style="background-position: 0px 0!important;" name="remove" value="{#imgmap.remove}" onclick="removeAction();" />
-				<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="cancelAction();" />
+				<input type="button" id="remove" class="button" style="background-position: 0px 0!important;" name="remove" value="Remove" onclick="removeAction();" />
+				<input type="button" id="cancel" name="cancel" value="Cancel" onclick="cancelAction();" />
 			</div>
 		</div>
 		
 	</form>
+
+<script>tinymce_imgmap_init();</script>
 
 </body>
 </html>
