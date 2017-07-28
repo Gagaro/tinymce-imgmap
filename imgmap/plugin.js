@@ -1,82 +1,98 @@
-(function() {
-	tinymce.PluginManager.requireLangPack('imgmap', 'en,fr');
+tinymce.PluginManager.requireLangPack('imgmap', 'de,en');
 
-    tinyMCE.addI18n('en.imgmap', {
-        title : 'Image Map Editor',
-        desc : 'Image Map Editor',
-        remove : 'Remove map'
+// Register commands
+tinymce.PluginManager.add('imgmap', function(ed, url) {
+
+  ed.plugin_translate = function(val) {
+    return (eval('tinymce.i18n.data.' + tinymce.settings.language + '.' + val) != "undefined")
+        ? eval('tinymce.i18n.data.' + tinymce.settings.language + '.' + val)
+        : val;
+  }
+
+  ed.addCommand('mceimgmapPopup', function() {
+    var e = ed.selection.getNode();
+
+    // Internal image object like a flash placeholder
+    if (ed.dom.getAttrib(e, 'class').indexOf('mceItem') != -1)
+      return;
+
+    ed.windowManager.open({
+      id: "imgmap",
+      title: ed.plugin_translate('imgmap.desc'),
+      file: url + '/popup.html',
+      width: 800,
+      height: 650,
+      buttons: [{
+        text: ed.plugin_translate('imgmap.btnUpdate'),
+        onclick: function(e) {
+          var iframes = document.getElementsByTagName('iframe');
+          var tgtWindow;
+          for(var i=0; i<iframes.length; i++){
+            if ( iframes[i].src.indexOf("/imgmap/popup.html") != -1) {
+              tgtWindow = iframes[i].contentWindow;
+              tgtWindow.updateAction();
+            }
+          }
+        }
+      }, {
+        text: ed.plugin_translate('imgmap.btnCancel'),
+        onclick: 'close'
+      }, {
+        text: ed.plugin_translate('imgmap.btnRemove'),
+        onclick: function(e) {
+          var iframes = document.getElementsByTagName('iframe');
+          var tgtWindow;
+          for(var i=0; i<iframes.length; i++){
+            if ( iframes[i].src.indexOf("/imgmap/popup.html") != -1) {
+              tgtWindow = iframes[i].contentWindow;
+              tgtWindow.removeAction();
+            }
+          }
+        }
+      }]
+    }, {
+      plugin_url: url
     });
+  });
 
-	
-	tinymce.PluginManager.add('imgmap', function(ed, url) {
-        // Register commands
-        ed.addCommand('mceimgmapPopup', function() {
-            var e = ed.selection.getNode();
+  // Register buttons
+  ed.addButton('imgmap', {
+    title: ed.plugin_translate('imgmap.desc'),
+    cmd: 'mceimgmapPopup',
+    image: url + '/images/tinymce_button.gif',
+    onPostRender: function() {
+      var ctrl = this;
 
-            // Internal image object like a flash placeholder
-            if (ed.dom.getAttrib(e, 'class').indexOf('mceItem') != -1)
-                return;
+      ed.on('NodeChange', function(event) {
+        var node = event.element;
 
-            ed.windowManager.open({
-                file : url + '/popup.html',
-                width : 700,
-                height : 560
-            }, {
-                plugin_url : url
-            });
-        });
+        if (node == null)
+          return;
 
-        // Register buttons
-        //tinyMCE.getButtonHTML(cn, 'lang_imgmap_desc', '{$pluginurl}/images/tinymce_button.gif', 'mceimgmapPopup');
-        ed.addButton('imgmap', {
-            title : 'imgmap.desc',
-            cmd : 'mceimgmapPopup',
-            image : url + '/images/tinymce_button.gif',
-            onPostRender: function() {
-                var ctrl = this;
+        //check parents
+        //if image parent already has imagemap, toggle selected state, if simple image, use normal state
+        do {
+          //console.log(node.nodeName);
+          if (node.nodeName == "IMG" && ed.dom.getAttrib(node, 'class').indexOf('mceItem') == -1) {
+            if (ed.dom.getAttrib(node, 'usemap') != '') {
+              ctrl.disabled(false);
+              ctrl.active(true);
+            } else {
+              ctrl.disabled(false);
+              ctrl.active(false);
+            }
+            return true;
+          }
+        }
+        while ((node = node.parentNode));
 
-                ed.on('NodeChange', function (event) {
-                    var node = event.element;
+        //button disabled by default
+        ctrl.disabled(true);
+        ctrl.active(false);
+        return true;
+      });
+    },
+  });
 
-                    if (node == null)
-                        return;
+});
 
-                    //check parents
-                    //if image parent already has imagemap, toggle selected state, if simple image, use normal state
-                    do {
-                        //console.log(node.nodeName);
-                        if (node.nodeName == "IMG" && ed.dom.getAttrib(node, 'class').indexOf('mceItem') == -1) {
-                            if (ed.dom.getAttrib(node, 'usemap') != '') {
-                                ctrl.disabled(false);
-                                ctrl.active(true);
-                            }
-                            else {
-                                ctrl.disabled(false);
-                                ctrl.active(false);
-                            }
-                            return true;
-                        }
-                    }
-                    while ((node = node.parentNode));
-
-                    //button disabled by default
-                    ctrl.disabled(true);
-                    ctrl.active(false);
-                    return true;
-                });
-            },
-        });
-
-    });
-
-    /* Removed since 4?
-    getInfo : function() {
-        return {
-            longname  : 'Image Map Editor',
-            author    : 'Gagaro, Adam Maschek, John Ericksen',
-            authorurl : 'https://github.com/Gagaro/tinymce-imgmap',
-            infourl   : 'https://github.com/Gagaro/tinymce-imgmap',
-            version   : "4.0beta1"
-        };
-    }*/
-})();
