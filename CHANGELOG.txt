@@ -2,6 +2,10 @@
 
 = Changelog =
 
+Version 4.0beta2
+ * Fixed language translation, currently only de and en and part of fr available. Translators welcome!
+ * Adjusted user interface to fit on newest TinyMCE
+
 Version 4.0beta1
  * TinyMCE 4 support only
 

@@ -202,7 +202,7 @@ function imgmap(config) {
   
   this.config.label_class        = 'imgmap_label';
   //the css class to apply on labels
-  this.config.label_style        = 'font: bold 10px Arial';
+  this.config.label_style        = 'font: 12px';
   //this.config.label_style        = 'font-weight: bold; font-size: 10px; font-family: Arial; color: #964';
   //the css style(s) to apply on labels
   

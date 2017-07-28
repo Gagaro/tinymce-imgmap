@@ -12,35 +12,30 @@
 
     <div style="height:585px; overflow: auto;">
 
-    <fieldset>
+    <fieldset class="fieldset_on">
 
-      <legend>
-        <a onclick="toggleFieldset(this.parentNode.parentNode)">{#imgmap.img_map_areas}</a>
-      </legend>
+      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)"><span class="icon-circle-up green"></span>&nbsp;{#imgmap.img_map_areas}</a></legend>
 
-      <div style="border-bottom: solid 1px #efefef">
-      <table cellspacing="0" width="100%">
+      <div style="border-bottom: solid 1px #c5c5c5">
+      <table width="100%">
         <tr>
-          <td width="50%">
-            <div id="button_container">
-              <!-- buttons come here -->
-              <img src="images/add.gif" onclick="myimgmap.addNewArea()" alt="{#imgmap.add_new_area}" title="{#imgmap.add_new_area}"/>
-              <img src="images/delete.gif" onclick="myimgmap.removeArea(myimgmap.currentid)" alt="{#imgmap.delete_area}" title="{#imgmap.delete_area}"/>
-              <img src="images/html.gif" onclick="gui_htmlShow()" alt="{#imgmap.get_image_map}" title="{#imgmap.get_image_map}"/>
-            </div>
+          <td width="30%">
+            <span onclick="myimgmap.addNewArea()" alt="{#imgmap.add_new_area}" title="{#imgmap.add_new_area}" class="pointer icon-plus"></span>
+            <span onclick="myimgmap.removeArea(myimgmap.currentid)" alt="{#imgmap.delete_area}" title="{#imgmap.delete_area}" class="pointer icon-minus"></span>
+            <span onclick="gui_htmlShow()" alt="{#imgmap.get_image_map}" title="{#imgmap.get_image_map}" class="pointer icon-embed2"></span>
           </td>
-          <td align="right" width="30%">
+          <td align="center" width="30%">
             <input type="checkbox" id="bb" onClick="toggleBoundingBox(this)"/>
-            <label for="bb">{#imgmap.img_bounding_box}</label>&nbsp;
-            <select onchange="changelabeling(this)">
-            <option value=''>{#imgmap.img_bounding_no_label}</option>
-            <option value='%n' selected='1'>{#imgmap.img_bounding_label_with_number}</option>
-            <option value='%a'>Label with alt text</option>
-            <option value='%h'>{#imgmap.img_bounding_label_with_href}</option>
-            <option value='%c'>{#imgmap.img_bounding_label_with_coords}</option>
+            <label for="bb">{#imgmap.img_bounding_box}</label>
+            <select onchange="changelabeling(this)" id="bb">
+              <option value=''>{#imgmap.img_bounding_no_label}</option>
+              <option value='%n' selected='1'>{#imgmap.img_bounding_label_with_number}</option>
+              <option value='%a'>Label with alt text</option>
+              <option value='%h'>{#imgmap.img_bounding_label_with_href}</option>
+              <option value='%c'>{#imgmap.img_bounding_label_with_coords}</option>
             </select>
           </td>
-          <td align="right" width="20%">
+          <td align="right" width="30%">
             <label for="dd_zoom">{#imgmap.img_map_zoom}</label>
             <select onchange="gui_zoom(this)" id="dd_zoom">
               <option value='0.25'>25%</option>
@@ -59,18 +54,18 @@
       </div>
     </fieldset>
 
-    <fieldset>
-      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)">{#imgmap.img_image}</a></legend>
+    <fieldset class="fieldset_on">
+      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)"><span class="icon-circle-up green"></span>&nbsp;{#imgmap.img_image}</a></legend>
       <div id="pic_container"></div>
     </fieldset>
 
-    <fieldset>
-      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)">{#imgmap.img_status}</a></legend>
+    <fieldset class="fieldset_on">
+      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)"><span class="icon-circle-up green"></span>&nbsp;{#imgmap.img_status}</a></legend>
       <div id="status_container" style="height:10px;"></div>
     </fieldset>
 
     <fieldset id="fieldset_html" class="fieldset_off">
-      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)">Code</a></legend>
+      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)"><span class="icon-circle-up green"></span>&nbsp;Code</a></legend>
       <div>
         <textarea id="html_container"></textarea>
       </div>

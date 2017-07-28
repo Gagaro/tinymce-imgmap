@@ -18,13 +18,10 @@ function open_infobase_select(id) {
 
 function tinymce_imgmap_init() {
 
-  //tinyMCEPopup.resizeToInnerSize();
-  //tinyMCE.setWindowArg('mce_windowresize', true);//i guess we dont need this
-
-  //editor = tinyMCEPopup.editor;
   editor = top.tinymce.activeEditor;
   img_obj = editor.selection.getNode();
 
+  // call to translate all {#imgmap.label} tags on popup.html
   global_translate();
 
   //late init
@@ -44,7 +41,7 @@ function tinymce_imgmap_init() {
   });
 
   informer_url = editor.contentWindow.parent.g_sURL;
-console.log("informer", informer_url);
+
   //we need this to load languages
   myimgmap.onLoad();
 
@@ -339,9 +336,7 @@ function gui_addArea(id) {
   myimgmap.addEvent(props[id], 'mouseover', gui_row_mouseover);
   myimgmap.addEvent(props[id], 'mouseout',  gui_row_mouseout);
   myimgmap.addEvent(props[id], 'click',     gui_row_click);
-  var temp = '<input type="text"  name="img_id" class="img_id" value="' + id + '" readonly="1"/>';
-  //temp+= '<input type="checkbox" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'">';
-  //could be checkbox in the future
+  var temp = '<input type="text"  name="img_id" class="img_id" value="' + id + '" readonly="1"/> ';
   temp += '<input type="radio" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'">';
   temp += ' <select name="img_shape" class="img_shape">';
   temp += '   <option value="rect" >' + plugin_translate('imgmap.FRM_CONTAINER_TYP_RECT') + '</option>';
@@ -350,9 +345,7 @@ function gui_addArea(id) {
   temp += ' </select>';
   temp += ' ' + plugin_translate('imgmap.FRM_CONTAINER_COORD') + ': <input type="text" name="img_coords" class="img_coords" value="">';
   temp += ' ' + plugin_translate('imgmap.FRM_CONTAINER_HREF') + ': <input type="text" name="img_href" class="img_href" value="">';
-  temp += '&nbsp;<a href="javascript:open_infobase_select(' + id + ');"" title="' + plugin_translate('imgmap.FRM_CONTAINER_INFOBASE') + '" style="background-image: url(images/infobaseurl.png);background-repeat: no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;</a>';
-
-  //temp += ' Alt: <input type="text" name="img_alt" class="img_alt" value="">';
+  temp += '&nbsp;<span onclick="open_infobase_select(' + id + ');" title="' + plugin_translate('imgmap.FRM_CONTAINER_INFOBASE') + '" class="icon-link pointer"></span>';
   temp += '<input type="hidden" name="img_alt" class="img_alt" value="">';
   temp += ' ' + plugin_translate('imgmap.FRM_CONTAINER_TARGET') + ': <select name="img_target" class="img_target">';
   temp += '<option value="_self"  >' + plugin_translate('imgmap.FRM_CONTAINER_TRGT_THIS') + '</option>';
@@ -361,7 +354,7 @@ function gui_addArea(id) {
   temp += '</select>';
   props[id].innerHTML = temp;
   //hook more event handlers to individual inputs
-  
+
   myimgmap.addEvent(props[id].getElementsByTagName('input')[1],  'keydown', gui_cb_keydown);
   myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'keydown', gui_coords_keydown);
   myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'change', gui_input_change);
@@ -530,10 +523,12 @@ function toggleBoundingBox(obj) {
 function toggleFieldset(fieldset, on) {
   if (fieldset) {
     if (fieldset.className == 'fieldset_off' || on == 1) {
-      fieldset.className = '';
+      fieldset.className = 'fieldset_on';
+      fieldset.getElementsByTagName('span')[0].className = 'icon-circle-up';;
     }
     else {
       fieldset.className = 'fieldset_off';
+      fieldset.getElementsByTagName('span')[0].className = 'icon-circle-down';;
     }
   }
 }
