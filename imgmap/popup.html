@@ -10,11 +10,11 @@
 <body id="imgmap" onload="tinymce_imgmap_init();">
   <form id="img_area_form" action="">
 
-    <div style="height:585px; overflow: auto;">
+    <div id="dialog_div" class="dialog_div">
 
     <fieldset class="fieldset_on">
 
-      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)"><span class="icon-circle-up green"></span>&nbsp;{#imgmap.img_map_areas}</a></legend>
+      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)">&nbsp;<span class="icon-circle-up green"></span>&nbsp;{#imgmap.img_map_areas}</a></legend>
 
       <div style="border-bottom: solid 1px #c5c5c5">
       <table width="100%">
@@ -22,7 +22,7 @@
           <td width="30%">
             <span onclick="myimgmap.addNewArea()" alt="{#imgmap.add_new_area}" title="{#imgmap.add_new_area}" class="pointer icon-plus"></span>
             <span onclick="myimgmap.removeArea(myimgmap.currentid)" alt="{#imgmap.delete_area}" title="{#imgmap.delete_area}" class="pointer icon-minus"></span>
-            <span onclick="gui_htmlShow()" alt="{#imgmap.get_image_map}" title="{#imgmap.get_image_map}" class="pointer icon-embed2"></span>
+            <span onclick="gui_htmlShow()" alt="{#imgmap.get_image_map}" title="{#imgmap.get_image_map}" class="pointer icon-embed2" id="code_button"></span>
           </td>
           <td align="center" width="30%">
             <input type="checkbox" id="bb" onClick="toggleBoundingBox(this)"/>
@@ -55,17 +55,17 @@
     </fieldset>
 
     <fieldset class="fieldset_on">
-      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)"><span class="icon-circle-up green"></span>&nbsp;{#imgmap.img_image}</a></legend>
+      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)">&nbsp;<span class="icon-circle-up green"></span>&nbsp;{#imgmap.img_image}</a></legend>
       <div id="pic_container"></div>
     </fieldset>
 
-    <fieldset class="fieldset_on">
-      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)"><span class="icon-circle-up green"></span>&nbsp;{#imgmap.img_status}</a></legend>
+    <fieldset id="fieldset_status" class="fieldset_on">
+      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)">&nbsp;<span class="icon-circle-up green"></span>&nbsp;{#imgmap.img_status}</a></legend>
       <div id="status_container" style="height:10px;"></div>
     </fieldset>
 
     <fieldset id="fieldset_html" class="fieldset_off">
-      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)"><span class="icon-circle-up green"></span>&nbsp;Code</a></legend>
+      <legend><a onclick="toggleFieldset(this.parentNode.parentNode)">&nbsp;<span class="icon-circle-up green"></span>&nbsp;Code</a></legend>
       <div>
         <textarea id="html_container"></textarea>
       </div>

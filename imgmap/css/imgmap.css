@@ -152,6 +152,11 @@ legend a {
   width: 100%;
 }
 
+.dialog_div {
+  height:585px;
+  overflow: auto;
+}
+
 .pointer {
   cursor: pointer;
 }

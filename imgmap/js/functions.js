@@ -1,25 +1,51 @@
-var informer_url;
 var myimgmap;
 var tinymce = parent.tinymce;
 var editor = null;
 var img_obj = null;
 var map_obj = null;
+var settings = null;
+
 //array of form elements
 var props = [];
 
+/**
+ * Opens a dialog to choose documents for target links
+ * Legacy dialog used by Informer
+ * @param id tag element id of the input field
+ * @return href link
+ */
 function open_infobase_select(id) {
   try {
-    var l_oWindow = window.open(informer_url + '/inc/editor/infobase_imgmap.asp?id=' + id, 'oWindow', 'scrollbars=yes,resizable=yes,width=1000,height=650');
-    l_oWindow.focus();
+    var win = window.open(settings.dialog_url + '/inc/editor/infobase_imgmap.asp?id=' + id, 'oWindow', 'scrollbars=yes,resizable=yes,width=900,height=600');
+    win.focus();
   } catch(e) {
     alert(e);
   }
 }
 
+/**
+ * init script called by popup.html onload
+ * handler to setup the imgmap page
+ */
 function tinymce_imgmap_init() {
 
-  editor = top.tinymce.activeEditor;
+  editor = tinymce.activeEditor;
   img_obj = editor.selection.getNode();
+  settings = tinymce.settings.imgmap_settings;
+
+  // dialog height
+  document.getElementById('dialog_div').style.height = settings.dialogHeight-15;
+
+  // picture container height
+  document.getElementById('pic_container').style.height = settings.pictureHeight;
+
+  // show code fieldset
+  if ( !settings.code ) {
+    document.getElementById('fieldset_html').style.display = 'none';
+    document.getElementById('code_button').style.display = 'none';
+  }
+  // show status fieldset
+  if ( !settings.status ) document.getElementById('fieldset_status').style.display = 'none';
 
   // call to translate all {#imgmap.label} tags on popup.html
   global_translate();
@@ -39,8 +65,6 @@ function tinymce_imgmap_init() {
     pic_container: document.getElementById('pic_container'),
     bounding_box : false
   });
-
-  informer_url = editor.contentWindow.parent.g_sURL;
 
   //we need this to load languages
   myimgmap.onLoad();
@@ -71,7 +95,7 @@ function tinymce_imgmap_init() {
 
 function updateAction() {
   if (img_obj != null && img_obj.nodeName == "IMG") {
-    top.tinymce.activeEditor.execCommand("mceBeginUndoLevel");
+    tinymce.activeEditor.execCommand("mceBeginUndoLevel");
 
     if (typeof map_obj == 'undefined' || map_obj == null) {
       map_obj = editor.contentWindow.document.createElement('MAP');
@@ -86,26 +110,26 @@ function updateAction() {
     img_obj.setAttribute('usemap', "#" + myimgmap.getMapName(), 0);
     //img_obj.setAttribute('border', '0');
     
-    top.tinymce.activeEditor.execCommand("mceEndUndoLevel");
+    tinymce.activeEditor.execCommand("mceEndUndoLevel");
   }
-  top.tinymce.activeEditor.windowManager.close();
+  tinymce.activeEditor.windowManager.close();
 }
 
 function cancelAction() {
-  top.tinymce.activeEditor.windowManager.close();
+  tinymce.activeEditor.windowManager.close();
 }
 
 //remove the map object and unset the usemap attribute
 function removeAction() {
-  top.tinymce.activeEditor.execCommand("mceBeginUndoLevel");
+  tinymce.activeEditor.execCommand("mceBeginUndoLevel");
   if (img_obj != null && img_obj.nodeName == "IMG") {
     img_obj.removeAttribute('usemap', 0);
   }
   if (typeof map_obj != 'undefined' && map_obj != null) {
     map_obj.parentNode.removeChild(map_obj);
   }
-  top.tinymce.activeEditor.execCommand("mceEndUndoLevel");
-  top.tinymce.activeEditor.windowManager.close();
+  tinymce.activeEditor.execCommand("mceEndUndoLevel");
+  tinymce.activeEditor.windowManager.close();
 }
 
 /** FUNCTION SECTION (code taken from default_interface) *****************************/
@@ -323,7 +347,7 @@ function gui_input_change(e) {
 /**
  *  Called from imgmap when a new area is added.
  */
-function gui_addArea(id) {
+function gui_addArea(id, customDialog) {
   //var id = props.length;
   //id = 1;
   props[id] = document.createElement('DIV');
@@ -345,7 +369,9 @@ function gui_addArea(id) {
   temp += ' </select>';
   temp += ' ' + plugin_translate('imgmap.FRM_CONTAINER_COORD') + ': <input type="text" name="img_coords" class="img_coords" value="">';
   temp += ' ' + plugin_translate('imgmap.FRM_CONTAINER_HREF') + ': <input type="text" name="img_href" class="img_href" value="">';
-  temp += '&nbsp;<span onclick="open_infobase_select(' + id + ');" title="' + plugin_translate('imgmap.FRM_CONTAINER_INFOBASE') + '" class="icon-link pointer"></span>';
+  // add legacy Informer dialog
+  if (settings.dialogBaseUrl.length>0)
+    temp += '&nbsp;<span onclick="open_infobase_select(' + id + ');" title="' + plugin_translate('imgmap.FRM_CONTAINER_INFOBASE') + '" class="icon-link pointer"></span>';
   temp += '<input type="hidden" name="img_alt" class="img_alt" value="">';
   temp += ' ' + plugin_translate('imgmap.FRM_CONTAINER_TARGET') + ': <select name="img_target" class="img_target">';
   temp += '<option value="_self"  >' + plugin_translate('imgmap.FRM_CONTAINER_TRGT_THIS') + '</option>';
