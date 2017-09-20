@@ -1,19 +1,19 @@
-tinymce.PluginManager.requireLangPack('imgmap', 'de,en');
+tinymce.PluginManager.requireLangPack('imgmap', 'de,en,fr');
 
 // Register commands
 tinymce.PluginManager.add('imgmap', function(ed, url) {
 
   ed.plugin_translate = function(val) {
-    return (eval('tinymce.i18n.data.' + tinymce.settings.language + '.' + val) != "undefined")
-        ? eval('tinymce.i18n.data.' + tinymce.settings.language + '.' + val)
+    return (tinymce.i18n.data[tinymce.settings.language][val] !== undefined)
+        ? tinymce.i18n.data[tinymce.settings.language][val]
         : val;
-  }
+  };
 
   ed.addCommand('mceimgmapPopup', function() {
     var e = ed.selection.getNode();
 
     // Internal image object like a flash placeholder
-    if (ed.dom.getAttrib(e, 'class').indexOf('mceItem') != -1)
+    if (ed.dom.getAttrib(e, 'class').indexOf('mceItem') !== -1)
       return;
 
     ed.windowManager.open({
@@ -28,7 +28,7 @@ tinymce.PluginManager.add('imgmap', function(ed, url) {
           var iframes = document.getElementsByTagName('iframe');
           var tgtWindow;
           for(var i=0; i<iframes.length; i++){
-            if ( iframes[i].src.indexOf("/imgmap/popup.html") != -1) {
+            if ( iframes[i].src.indexOf("/imgmap/popup.html") !== -1) {
               tgtWindow = iframes[i].contentWindow;
               tgtWindow.updateAction();
             }
@@ -43,7 +43,7 @@ tinymce.PluginManager.add('imgmap', function(ed, url) {
           var iframes = document.getElementsByTagName('iframe');
           var tgtWindow;
           for(var i=0; i<iframes.length; i++){
-            if ( iframes[i].src.indexOf("/imgmap/popup.html") != -1) {
+            if ( iframes[i].src.indexOf("/imgmap/popup.html") !== -1) {
               tgtWindow = iframes[i].contentWindow;
               tgtWindow.removeAction();
             }
@@ -66,15 +66,15 @@ tinymce.PluginManager.add('imgmap', function(ed, url) {
       ed.on('NodeChange', function(event) {
         var node = event.element;
 
-        if (node == null)
+        if (node === null)
           return;
 
         //check parents
         //if image parent already has imagemap, toggle selected state, if simple image, use normal state
         do {
           //console.log(node.nodeName);
-          if (node.nodeName == "IMG" && ed.dom.getAttrib(node, 'class').indexOf('mceItem') == -1) {
-            if (ed.dom.getAttrib(node, 'usemap') != '') {
+          if (node.nodeName === "IMG" && ed.dom.getAttrib(node, 'class').indexOf('mceItem') === -1) {
+            if (ed.dom.getAttrib(node, 'usemap') !== '') {
               ctrl.disabled(false);
               ctrl.active(true);
             } else {
@@ -91,7 +91,7 @@ tinymce.PluginManager.add('imgmap', function(ed, url) {
         ctrl.active(false);
         return true;
       });
-    },
+    }
   });
 
 });
