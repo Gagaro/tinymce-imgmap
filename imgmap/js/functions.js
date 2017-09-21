@@ -370,7 +370,7 @@ function gui_addArea(id, customDialog) {
   temp += ' ' + plugin_translate('imgmap.FRM_CONTAINER_COORD') + ': <input type="text" name="img_coords" class="img_coords" value="">';
   temp += ' ' + plugin_translate('imgmap.FRM_CONTAINER_HREF') + ': <input type="text" name="img_href" class="img_href" value="">';
   // add legacy Informer dialog
-  if (settings.dialogBaseUrl.length>0)
+  if (settings.dialogBaseUrl && settings.dialogBaseUrl.length>0)
     temp += '&nbsp;<span onclick="open_infobase_select(' + id + ');" title="' + plugin_translate('imgmap.FRM_CONTAINER_INFOBASE') + '" class="icon-link pointer"></span>';
   temp += '<input type="hidden" name="img_alt" class="img_alt" value="">';
   temp += ' ' + plugin_translate('imgmap.FRM_CONTAINER_TARGET') + ': <select name="img_target" class="img_target">';
@@ -542,7 +542,7 @@ function toggleBoundingBox(obj) {
 
 /**
  *  Toggles fieldset visibility by changing the className.
- *  External css needed with the appropriate classnames. 
+ *  External css needed with the appropriate classnames.
  *  @date  2006.10.24. 22:13:34
  *  @author  Adam Maschek (maschek@freemail.hu)
  */
@@ -579,8 +579,8 @@ function gui_zoom() {
 }
 
 plugin_translate = function(val) {
-  return (eval('tinymce.i18n.data.' + tinymce.settings.language + '.' + val) != undefined)
-      ? eval('tinymce.i18n.data.' + tinymce.settings.language + '.' + val)
+  return (tinymce.i18n.data[tinymce.settings.language][val] !== undefined)
+      ? tinymce.i18n.data[tinymce.settings.language][val]
       : val;
 }
 

@@ -12,6 +12,15 @@ tinymce.PluginManager.add('imgmap', function(ed, url) {
   ed.addCommand('mceimgmapPopup', function() {
     var e = ed.selection.getNode();
 
+    // Create default settings if none exists
+    tinymce.settings.imgmap_settings = Object.assign({
+      status                     : true,
+      code                       : true,
+      dialogBaseUrl              : '',
+      dialogHeight               : 610,
+      pictureHeight              : 300
+    }, tinymce.settings.imgmap_settings);
+
     // Internal image object like a flash placeholder
     if (ed.dom.getAttrib(e, 'class').indexOf('mceItem') !== -1)
       return;
@@ -21,7 +30,7 @@ tinymce.PluginManager.add('imgmap', function(ed, url) {
       title: ed.plugin_translate('imgmap.desc'),
       file: url + '/popup.html',
       width: 800,
-      height: tinymce.settings.imgmap_settings.dialogHeight || 610,
+      height: tinymce.settings.imgmap_settings.dialogHeight,
       buttons: [{
         text: ed.plugin_translate('imgmap.btnUpdate'),
         onclick: function(e) {
