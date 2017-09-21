@@ -337,6 +337,7 @@ function gui_addArea(id) {
 	temp+= 'Coords: <input type="text" name="img_coords" class="img_coords" value="">';
 	temp+= 'Href: <input type="text" name="img_href" class="img_href" value="">';
 	temp+= 'Alt: <input type="text" name="img_alt" class="img_alt" value="">';
+	temp+= 'Title: <input type="text" name="img_title" class="img_title" value="">';
 	temp+= 'Target: <select name="img_target" class="img_target">';
 	temp+= '<option value=""  >&lt;not set&gt;</option>';
 	temp+= '<option value="_self"  >this window</option>';
@@ -351,6 +352,7 @@ function gui_addArea(id) {
 	myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'change', gui_input_change);
 	myimgmap.addEvent(props[id].getElementsByTagName('input')[3],  'change', gui_input_change);
 	myimgmap.addEvent(props[id].getElementsByTagName('input')[4],  'change', gui_input_change);
+	myimgmap.addEvent(props[id].getElementsByTagName('input')[5],  'change', gui_input_change);
 	myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_input_change);
 	myimgmap.addEvent(props[id].getElementsByTagName('select')[1], 'change', gui_input_change);
 	if (myimgmap.isSafari) {
